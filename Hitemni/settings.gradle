@@ -1,1 +1,1 @@
-include ':app', ':samples:SwitchUserSample', ':samples:Scrumptious', ':facebook', ':samples:RPSSample', ':samples:MessengerSendSample', ':samples:HelloFacebookSample'
+include ':app', ':facebook'
