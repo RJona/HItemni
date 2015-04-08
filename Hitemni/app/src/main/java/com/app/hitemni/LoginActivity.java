@@ -1,7 +1,6 @@
 package com.app.hitemni;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,7 +52,7 @@ public class LoginActivity extends Activity {
                 }
             }
         });
-    } 
+    }
 
     private Session.StatusCallback statusCallback = new Session.StatusCallback() {
         @Override
@@ -62,7 +61,7 @@ public class LoginActivity extends Activity {
                 Log.d("MainActivity", "Facebook session opened.");
                 Toast.makeText(getApplicationContext(), "Facebook session opened.",
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), AccueilActivity.class);
+                Intent intent = new Intent(getApplicationContext(), Accueil.class);
                 startActivity(intent);
             } else if (sessionState.isClosed()) {
                 Log.d("MainActivity", "Facebook session closed.");
@@ -108,7 +107,7 @@ public class LoginActivity extends Activity {
                 password.getText().toString().equals("admin")){
             Toast.makeText(getApplicationContext(), "Redirecting...",
                     Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), AccueilActivity.class);
+            Intent intent = new Intent(getApplicationContext(), Accueil.class);
             startActivity(intent);
         }
         else{

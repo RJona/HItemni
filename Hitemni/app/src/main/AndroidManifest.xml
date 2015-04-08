@@ -15,14 +15,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AccueilActivity"
-            android:label="@string/title_activity_accueil" >
-        </activity>
-        <activity
-            android:name=".EcoleActivity"
-            android:label="@string/title_activity_ecole" >
-        </activity>
         <uses-permission android:name="android.permission.INTERNET"/>
         <activity android:name="com.facebook.LoginActivity"
             android:configChanges=
@@ -30,5 +22,50 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <activity
+            android:name=".Accueil"
+            android:label="@string/title_activity_accueil" >
+        </activity>
+        <activity
+            android:name=".Ecole"
+            android:label="@string/title_activity_ecole" >
+        </activity>
+        <activity
+            android:name=".EventEcole"
+            android:label="@string/title_activity_event_ecole" >
+        </activity>
+        <activity
+            android:name=".Favoris"
+            android:label="@string/title_activity_favoris" >
+        </activity>
+        <activity
+            android:name=".RechercheFavoris"
+            android:label="@string/title_activity_recherche_favoris" >
+        </activity>
+        <activity
+            android:name=".GeolocalisationFavoris"
+            android:label="@string/title_activity_geolocalisation_favoris" >
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <activity
+            android:name=".ProfilPerso"
+            android:label="@string/title_activity_profil_perso" >
+        </activity>
+        <activity
+            android:name=".ExperiencePro"
+            android:label="@string/title_activity_experience_pro" >
+        </activity>
+        <activity
+            android:name=".Messages"
+            android:label="@string/title_activity_messages" >
+        </activity>
+        <activity
+            android:name=".CV"
+            android:label="@string/title_activity_cv" >
+        </activity>
     </application>
 </manifest>

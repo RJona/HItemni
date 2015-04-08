@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.example.hitemni.Messages">
+
+    <!--Page Accueil -->
+    <item android:id="@+id/title_activity_accueil"
+        android:title="@string/title_activity_accueil"
+        />
+
+</menu>

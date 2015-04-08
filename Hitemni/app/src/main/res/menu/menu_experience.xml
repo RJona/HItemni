@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.hitemni.ExperiencePro">
+
+    <!-- Page Accueil -->
+    <item android:id="@+id/title_activity_accueil"
+        android:title="@string/title_activity_accueil"
+        />
+
+    <!-- Page Profil Perso -->
+    <item android:id="@+id/title_activity_profil_perso"
+        android:title="@string/title_activity_profil_perso"
+        />
+
+    <!-- page CV -->
+    <item android:id="@+id/title_activity_cv"
+        android:title="@string/title_activity_cv"
+        />
+
+</menu>

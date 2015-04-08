@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.hitemni.GeolocalisationFavoris">
+
+    <!--Page Accueil -->
+    <item android:id="@+id/title_activity_accueil"
+        android:title="@string/title_activity_accueil"
+        />
+
+    <!-- Page Favoris -->
+    <item android:id="@+id/title_activity_favoris"
+        android:title="@string/title_activity_favoris"
+        />
+    <!-- page recherche_favoris-->
+    <item android:id="@+id/title_activity_recherche_favoris"
+        android:title="@string/title_activity_recherche_favoris"
+        />
+
+</menu>

@@ -1,9 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context="com.example.hitemniEcole">
 
-    <item android:id="@+id/title_activity_ecole"
-        android:title="@string/title_activity_ecole"
-         />
+    <!--Page Accueil -->
+    <item android:id="@+id/title_activity_accueil"
+        android:title="@string/title_activity_accueil"
+        />
+
+    <!--Page evenement ecole-->
+    <item android:id="@+id/title_activity_event_ecole"
+        android:title="@string/title_activity_event_ecole"
+    />
+
 
 </menu>
 

@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" tools:context="com.example.hitemni.EventEcole">
+
+    <!--Page accueil -->
+    <item android:id="@+id/title_activity_accueil"
+        android:title="@string/title_activity_accueil"
+        />
+
+    <!--Page info ecole-->
+    <item android:id="@+id/title_activity_ecole"
+        android:title="@string/title_activity_ecole"
+        />
+
+
+
+
+</menu>
