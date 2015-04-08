@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Hitemni</string>
     <string name="facebook_app_id">1025858567442235</string>
+
+
     <string name="login">Connexion</string>
     <string name="username">E-mail</string>
     <string name="password">Mot de passe</string>
