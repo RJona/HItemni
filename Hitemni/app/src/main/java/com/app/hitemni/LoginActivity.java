@@ -1,6 +1,7 @@
 package com.app.hitemni;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -27,10 +28,12 @@ public class LoginActivity extends Activity {
     }
 
     public void login(View view){
-        if(username.getText().toString().equals("admin") &&
+        if(username.getText().toString().equals("Admin") &&
                 password.getText().toString().equals("admin")){
             Toast.makeText(getApplicationContext(), "Redirecting...",
                     Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), AccueilActivity.class);
+            startActivity(intent);
         }
         else{
             Toast.makeText(getApplicationContext(), "Wrong Credentials",
@@ -39,6 +42,9 @@ public class LoginActivity extends Activity {
         }
 
     }
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -1,27 +1,38 @@
 package com.app.hitemni;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 
-import java.util.Arrays;
 
+public class AccueilActivity extends Activity {
 
-public class MainActivity extends ActionBarActivity {
+    ImageButton imgb_ecole ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_accueil);
+
+        //ECOLE
+        imgb_ecole = (ImageButton) findViewById(R.id.imgb_ecole);
+        imgb_ecole.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EcoleActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_accueil, menu);
         return true;
     }
 

@@ -30,5 +30,6 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:22.0.0'
-    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
+    compile 'com.github.asne.facebook:facebook:3.17.2'
+    //compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 }
