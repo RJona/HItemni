@@ -3,9 +3,6 @@ package com.app.hitemni;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,9 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.model.people.Person;
 
-import java.io.InputStream;
 import java.util.Arrays;
 
 /**
@@ -46,7 +41,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     private TextView passwordTV=null;
     private TextView loginTitleTV=null;
     private Button login;
-    private LoginButton loginBtn;
+    private LoginButton loginFacebook;
     private UiLifecycleHelper uiHelper;
     private static final int RC_SIGN_IN = 0;
     // Logcat tag
@@ -66,10 +61,13 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 
     private boolean mSignInClicked;
 
+    private boolean isSignedWithFacebook=false;
+    private boolean isSignedWithLogin=false;
+
     private ConnectionResult mConnectionResult;
 
-    private SignInButton btnSignIn;
-    private Button btnSignOut, btnRevokeAccess;
+    private SignInButton loginGoogle;
+    private Button logoutGoogle, revokeGoogle;
     private ImageView imgProfilePic;
     private TextView txtName, txtEmail;
     private LinearLayout llProfileLayout;
@@ -93,43 +91,46 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         uiHelper.onCreate(savedInstanceState);
 
 
-        loginBtn = (LoginButton) findViewById(R.id.login_button);
-        loginBtn.setReadPermissions(Arrays.asList("email"));
-        loginBtn.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
+        loginFacebook = (LoginButton) findViewById(R.id.login_button);
+        loginFacebook.setReadPermissions(Arrays.asList("email"));
+        loginFacebook.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
             @Override
             public void onUserInfoFetched(GraphUser graphUser) {
-                if(graphUser != null) {
-                    Toast.makeText(getApplicationContext(), "You are currently connected as "+graphUser.getName(),
+                if (graphUser != null) {
+                    Toast.makeText(getApplicationContext(), "You are currently connected as " + graphUser.getName(),
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         /* Google+ */
-        btnSignIn = (SignInButton) findViewById(R.id.sign_in_button);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
+        loginGoogle = (SignInButton) findViewById(R.id.sign_in_button);
+        logoutGoogle = (Button) findViewById(R.id.btn_sign_out);
+        revokeGoogle = (Button) findViewById(R.id.btn_revoke_access);
+        loginGoogle.setOnClickListener(this);
+        logoutGoogle.setOnClickListener(this);
+        revokeGoogle.setOnClickListener(this);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
-
     }
 
     private Session.StatusCallback statusCallback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState sessionState, Exception e) {
             if (sessionState.isOpened()) {
+                isSignedWithFacebook=true;
+                updateUI(false);
                 Log.d("MainActivity", "Facebook session opened.");
                 Toast.makeText(getApplicationContext(), "Facebook session opened.",
                         Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), Accueil.class);
                 startActivity(intent);
             } else if (sessionState.isClosed()) {
+                isSignedWithFacebook=false;
+                updateUI(false);
                 Log.d("MainActivity", "Facebook session closed.");
                 Toast.makeText(getApplicationContext(), "Facebook session closed.",
                         Toast.LENGTH_SHORT).show();
@@ -187,10 +188,12 @@ public class LoginActivity extends Activity implements View.OnClickListener,
                 password.getText().toString().equals("admin")){
             Toast.makeText(getApplicationContext(), "Redirecting...",
                     Toast.LENGTH_SHORT).show();
+            isSignedWithLogin=true;
             Intent intent = new Intent(getApplicationContext(), Accueil.class);
             startActivity(intent);
         }
         else{
+            isSignedWithLogin=false;
             Toast.makeText(getApplicationContext(), "Wrong Credentials",
                     Toast.LENGTH_SHORT).show();
         }
@@ -271,26 +274,35 @@ public class LoginActivity extends Activity implements View.OnClickListener,
      * */
     private void updateUI(boolean isSignedIn) {
         if (isSignedIn) {
-            btnSignIn.setVisibility(View.GONE);
-            btnSignOut.setVisibility(View.VISIBLE);
-            btnRevokeAccess.setVisibility(View.VISIBLE);
+            loginGoogle.setVisibility(View.GONE);
+            logoutGoogle.setVisibility(View.VISIBLE);
+            revokeGoogle.setVisibility(View.VISIBLE);
             username.setVisibility(View.GONE);
             password.setVisibility(View.GONE);
-            loginBtn.setVisibility(View.GONE);
+            loginFacebook.setVisibility(View.GONE);
             login.setVisibility(View.GONE);
-            btnSignIn.setVisibility(View.GONE);
             loginTitleTV.setVisibility(View.GONE);
             usernameTV.setVisibility(View.GONE);
             passwordTV.setVisibility(View.GONE);
-        } else {
-            btnSignIn.setVisibility(View.VISIBLE);
-            btnSignOut.setVisibility(View.GONE);
-            btnRevokeAccess.setVisibility(View.GONE);
+        } else if(isSignedWithFacebook) {
+            loginGoogle.setVisibility(View.GONE);
+            logoutGoogle.setVisibility(View.GONE);
+            revokeGoogle.setVisibility(View.GONE);
+            username.setVisibility(View.GONE);
+            password.setVisibility(View.GONE);
+            loginFacebook.setVisibility(View.VISIBLE);
+            login.setVisibility(View.GONE);
+            loginTitleTV.setVisibility(View.GONE);
+            usernameTV.setVisibility(View.GONE);
+            passwordTV.setVisibility(View.GONE);
+        }  else {
+            loginGoogle.setVisibility(View.VISIBLE);
+            logoutGoogle.setVisibility(View.GONE);
+            revokeGoogle.setVisibility(View.GONE);
             username.setVisibility(View.VISIBLE);
             password.setVisibility(View.VISIBLE);
-            loginBtn.setVisibility(View.VISIBLE);
+            loginFacebook.setVisibility(View.VISIBLE);
             login.setVisibility(View.VISIBLE);
-            btnSignIn.setVisibility(View.VISIBLE);
             loginTitleTV.setVisibility(View.VISIBLE);
             usernameTV.setVisibility(View.VISIBLE);
             passwordTV.setVisibility(View.VISIBLE);

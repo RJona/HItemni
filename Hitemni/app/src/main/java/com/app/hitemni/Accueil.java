@@ -16,6 +16,7 @@ public class Accueil extends Activity {
     ImageButton imgb_favoris ;
     ImageButton imgb_profil ;
     ImageButton imgb_message;
+    ImageButton imgb_map;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +58,16 @@ public class Accueil extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Messages.class);
+                startActivity(intent);
+            }
+        });
+
+        //MAP
+        imgb_map = (ImageButton) findViewById(R.id.imgb_map);
+        imgb_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Localisation.class);
                 startActivity(intent);
             }
         });
