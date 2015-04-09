@@ -44,6 +44,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     private EditText password=null;
     private TextView usernameTV=null;
     private TextView passwordTV=null;
+    private TextView loginTitleTV=null;
     private Button login;
     private LoginButton loginBtn;
     private UiLifecycleHelper uiHelper;
@@ -81,8 +82,10 @@ public class LoginActivity extends Activity implements View.OnClickListener,
         username = (EditText)findViewById(R.id.editText1);
         password = (EditText)findViewById(R.id.editText2);
         login = (Button)findViewById(R.id.button1);
-        usernameTV = (TextView)findViewById(R.id.textView1);
-        passwordTV = (TextView)findViewById(R.id.textView2);
+        loginTitleTV = (TextView)findViewById(R.id.textView1);
+        usernameTV = (TextView)findViewById(R.id.textView2);
+        passwordTV = (TextView)findViewById(R.id.textView3);
+
 
         /* Facebook */
 
@@ -276,6 +279,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             loginBtn.setVisibility(View.GONE);
             login.setVisibility(View.GONE);
             btnSignIn.setVisibility(View.GONE);
+            loginTitleTV.setVisibility(View.GONE);
             usernameTV.setVisibility(View.GONE);
             passwordTV.setVisibility(View.GONE);
         } else {
@@ -287,6 +291,7 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             loginBtn.setVisibility(View.VISIBLE);
             login.setVisibility(View.VISIBLE);
             btnSignIn.setVisibility(View.VISIBLE);
+            loginTitleTV.setVisibility(View.VISIBLE);
             usernameTV.setVisibility(View.VISIBLE);
             passwordTV.setVisibility(View.VISIBLE);
         }
