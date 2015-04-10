@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -27,6 +28,17 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 /**
@@ -75,6 +87,8 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         setContentView(R.layout.activity_login);
 
         username = (EditText)findViewById(R.id.editText1);
@@ -184,18 +198,40 @@ public class LoginActivity extends Activity implements View.OnClickListener,
 
 
     public void login(View view){
-        if(username.getText().toString().equals("Admin") &&
-                password.getText().toString().equals("admin")){
-            Toast.makeText(getApplicationContext(), "Redirecting...",
-                    Toast.LENGTH_SHORT).show();
-            isSignedWithLogin=true;
-            Intent intent = new Intent(getApplicationContext(), Accueil.class);
-            startActivity(intent);
-        }
-        else{
-            isSignedWithLogin=false;
+        if(username == null || password == null){
             Toast.makeText(getApplicationContext(), "Wrong Credentials",
                     Toast.LENGTH_SHORT).show();
+            isSignedWithLogin=false;
+            return;
+        }
+        HttpClient client = new DefaultHttpClient();
+        HttpGet request = new HttpGet("http://192.168.2.50:8080/primavera/api/user/authentication?login=" + username.getText().toString() + "&password=" + password.getText().toString());
+        try {
+            HttpResponse response = client.execute(request);
+            BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            String line ="";
+            String result="";
+            while ((line = br.readLine()) != null){
+                result += line;
+            }
+            if(!result.equals("{}")) {
+                Toast.makeText(getApplicationContext(), "Redirecting...",
+                        Toast.LENGTH_SHORT).show();
+                isSignedWithLogin=true;
+                Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                startActivity(intent);
+            }
+            else{
+                Toast.makeText(getApplicationContext(), "Wrong Credentials",
+                        Toast.LENGTH_SHORT).show();
+                isSignedWithLogin=false;
+            }
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+            isSignedWithLogin=false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            isSignedWithLogin=false;
         }
 
     }
