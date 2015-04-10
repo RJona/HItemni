@@ -33,6 +33,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -197,15 +198,16 @@ public class LoginActivity extends Activity implements View.OnClickListener,
     }
 
 
-    public void login(View view){
-        if(username == null || password == null){
+    public void login(View view) throws JSONException {
+        if(username.getText().toString().equals("") || password.getText().toString().equals("")){
             Toast.makeText(getApplicationContext(), "Wrong Credentials",
                     Toast.LENGTH_SHORT).show();
             isSignedWithLogin=false;
             return;
         }
         HttpClient client = new DefaultHttpClient();
-        HttpGet request = new HttpGet("http://192.168.2.50:8080/primavera/api/user/authentication?login=" + username.getText().toString() + "&password=" + password.getText().toString());
+        /*HttpGet request = new HttpGet("http://192.168.2.50:8080/primavera/api/user/authentication?login=" + username.getText().toString() + "&password=" + password.getText().toString());*/
+        HttpGet request = new HttpGet("http://10.10.81.17:8080/hitemni_bdd/api/utilisateur/authentication?email=" + username.getText().toString() + "&password=" + password.getText().toString());
         try {
             HttpResponse response = client.execute(request);
             BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -214,11 +216,15 @@ public class LoginActivity extends Activity implements View.OnClickListener,
             while ((line = br.readLine()) != null){
                 result += line;
             }
-            if(!result.equals("{}")) {
+            JSONObject user = new JSONObject(result);
+
+            if(user.length()>0) {
                 Toast.makeText(getApplicationContext(), "Redirecting...",
                         Toast.LENGTH_SHORT).show();
                 isSignedWithLogin=true;
                 Intent intent = new Intent(getApplicationContext(), Accueil.class);
+                intent.putExtra("userId", user.getInt("idUser"));
+                intent.putExtra("nom", user.getString("nom"));
                 startActivity(intent);
             }
             else{
